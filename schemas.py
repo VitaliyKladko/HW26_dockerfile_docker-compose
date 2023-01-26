@@ -17,3 +17,4 @@ class RequestParamsSchema(Schema):
 
 class RequestParamsListSchema(Schema):
     queries = fields.Nested(RequestParamsSchema, many=True)
+    filename = fields.Str(required=True)

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
 from schemas import RequestParamsListSchema
+from utils import build_query
 
 main_bp = Blueprint('main', __name__)
 
@@ -12,4 +13,13 @@ def perform_query():
     except ValidationError as error:
         return error.messages, '400'
 
-    return jsonify(params)
+    result = None
+    for query in params['queries']:
+        result = build_query(
+            cmd=query['cmd'],
+            param=query['value'],
+            filename=params['filename'],
+            data=result,
+        )
+
+    return jsonify(result), '200'

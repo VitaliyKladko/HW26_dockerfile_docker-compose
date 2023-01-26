@@ -29,3 +29,19 @@ def sort_query(param, data: list[str]) -> list[str]:
 def limit_query(param: str, data: list[str]) -> list[str]:
     limit = int(param)
     return data[:limit]
+
+
+CMD_TO_FUNCTION = {
+    'filter': filter_query,
+    'map': map_query,
+    'unique': unique_query,
+    'sort': sort_query,
+    'limit': limit_query,
+}
+
+
+def build_query(cmd, param, filename, data=None):
+    if not data:
+        with open(f'data/{filename}') as file:
+            data = list(map(lambda row: row.strip(), file))
+    return CMD_TO_FUNCTION[cmd](param=param, data=data)
