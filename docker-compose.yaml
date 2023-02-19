@@ -11,16 +11,11 @@ services:
       - DB_NAME=db_name
       - DB_HOST=db
     depends_on:
-      db:
-        condition: service_healthy
+      - db
   db:
     image: postgres:latest
     environment:
       - POSTGRES_PASSWORD=db_password
       - POSTGRES_USER=db_user
       - POSTGRES_DB=db_name
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U db_user -d db_name" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+
