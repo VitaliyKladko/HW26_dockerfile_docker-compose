@@ -42,5 +42,6 @@ def test_db():
     return jsonify(
         {
             'result': result,
+            'add_test_str': 'test_str_commit'
         }
     )
